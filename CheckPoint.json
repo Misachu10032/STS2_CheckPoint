@@ -1,0 +1,14 @@
+﻿{
+  "id": "CheckPoint",
+  "name": "CheckPoint",
+  "author": "Misachu",
+  "description": "Allows you to go back to any floor in a run\nR to restart the current floor.\nL to select any floor.",
+  "version": "v1.0.0",
+  "min_game_version": "0.107.0",
+  "has_pck": true,
+  "has_dll": true,
+  "dependencies": [
+    {"id": "BaseLib", "min_version": "3.3.2"}
+  ],
+  "affects_gameplay": true
+}
