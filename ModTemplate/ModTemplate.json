@@ -1,0 +1,12 @@
+﻿{
+  "id": "ModTemplate",
+  "name": "Checkpoint",
+  "author": "Misachu",
+  "description": "Allows you to go back to any floor in a run",
+  "version": "v1.0.0",
+  "min_game_version": "0.107.0",
+  "has_pck": false,
+  "has_dll": true,
+  "dependencies": [],
+  "affects_gameplay": true
+}
