@@ -55,7 +55,7 @@ internal static class CheckpointUi
             _lHeld = 0;
         }
 
-        if (Input.IsKeyPressed(Key.S))
+        if (Input.IsKeyPressed(Key.R))
         {
             if (_sHeld >= 0)
             {
@@ -90,8 +90,8 @@ internal static class CheckpointUi
         _hudButton.AnchorRight  = 0.5f;
         _hudButton.AnchorTop    = 0f;
         _hudButton.AnchorBottom = 0f;
-        _hudButton.OffsetLeft   = -100f;
-        _hudButton.OffsetRight  = 100f;
+        _hudButton.OffsetLeft   = -50f;
+        _hudButton.OffsetRight  = 150f;
         _hudButton.OffsetTop    = 15f;
         _hudButton.OffsetBottom = 40f;
         _hudButton.Pressed      += TogglePanel;
@@ -102,8 +102,8 @@ internal static class CheckpointUi
         _quickLoadButton.AnchorRight  = 0.5f;
         _quickLoadButton.AnchorTop    = 0f;
         _quickLoadButton.AnchorBottom = 0f;
-        _quickLoadButton.OffsetLeft   = -100f;
-        _quickLoadButton.OffsetRight  = 100f;
+        _quickLoadButton.OffsetLeft   = -50f;
+        _quickLoadButton.OffsetRight  = 150f;
         _quickLoadButton.OffsetTop    = 43f;
         _quickLoadButton.OffsetBottom = 68f;
         _quickLoadButton.Pressed      += QuickLoad;
