@@ -124,9 +124,9 @@ internal static class CheckpointUi
         _panel.AddChild(overlay);
 
         var bg = new Panel();
-        bg.AnchorLeft   = 0.10f;
+        bg.AnchorLeft   = 0.20f;
         bg.AnchorTop    = 0.05f;
-        bg.AnchorRight  = 0.90f;
+        bg.AnchorRight  = 0.80f;
         bg.AnchorBottom = 0.95f;
         _panel.AddChild(bg);
 
@@ -157,7 +157,7 @@ internal static class CheckpointUi
         var cols = new HBoxContainer();
         outer.AddChild(cols);
         cols.AddChild(ColLabel("Floor", 80));
-        cols.AddChild(ColLabel("Saved at", 150));
+        cols.AddChild(ColLabel("Saved at", 100));
         cols.AddChild(new Control { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill });
         outer.AddChild(new HSeparator());
 
@@ -212,7 +212,7 @@ internal static class CheckpointUi
             var row = new HBoxContainer();
             _list.AddChild(row);
             row.AddChild(new Label { Text = $"Floor {cp.Floor,2}",                              CustomMinimumSize = new Vector2(80,  0) });
-            row.AddChild(new Label { Text = cp.SavedAt.ToLocalTime().ToString("MM/dd  HH:mm:ss"), CustomMinimumSize = new Vector2(150, 0) });
+            row.AddChild(new Label { Text = cp.SavedAt.ToLocalTime().ToString("MM/dd  HH:mm:ss"), CustomMinimumSize = new Vector2(100, 0) });
             row.AddChild(new Control { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill });
 
             var btn = new Button { Text = "Load" };
