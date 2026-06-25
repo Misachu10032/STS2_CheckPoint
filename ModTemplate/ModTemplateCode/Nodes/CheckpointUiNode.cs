@@ -12,10 +12,12 @@ namespace ModTemplate.ModTemplateCode.Nodes;
 internal static class CheckpointUi
 {
     private static Button?        _hudButton;
+    private static Button?        _quickLoadButton;
     private static Control?       _panel;
     private static VBoxContainer? _list;
 
     private static double _lHeld;
+    private static double _sHeld;
     private const  double ToggleHold = 0.3;
 
     // Called from NRunReadyPatch — builds the UI once per run scene.
@@ -53,6 +55,23 @@ internal static class CheckpointUi
             _lHeld = 0;
         }
 
+        if (Input.IsKeyPressed(Key.S))
+        {
+            if (_sHeld >= 0)
+            {
+                _sHeld += delta;
+                if (_sHeld >= ToggleHold)
+                {
+                    _sHeld = double.MinValue;
+                    QuickLoad();
+                }
+            }
+        }
+        else
+        {
+            _sHeld = 0;
+        }
+
         if (_panel?.Visible == true && Input.IsKeyPressed(Key.Escape))
             _panel.Visible = false;
     }
@@ -77,6 +96,18 @@ internal static class CheckpointUi
         _hudButton.OffsetBottom = 40f;
         _hudButton.Pressed      += TogglePanel;
         root.AddChild(_hudButton);
+
+        _quickLoadButton = new Button { Text = "Quick SL" };
+        _quickLoadButton.AnchorLeft   = 0.5f;
+        _quickLoadButton.AnchorRight  = 0.5f;
+        _quickLoadButton.AnchorTop    = 0f;
+        _quickLoadButton.AnchorBottom = 0f;
+        _quickLoadButton.OffsetLeft   = -100f;
+        _quickLoadButton.OffsetRight  = 100f;
+        _quickLoadButton.OffsetTop    = 43f;
+        _quickLoadButton.OffsetBottom = 68f;
+        _quickLoadButton.Pressed      += QuickLoad;
+        root.AddChild(_quickLoadButton);
 
         _panel = new Control();
         _panel.SetAnchorsPreset(Control.LayoutPreset.FullRect);
@@ -144,6 +175,14 @@ internal static class CheckpointUi
         Text              = text,
         CustomMinimumSize = new Vector2(minWidth, 0),
     };
+
+    // ── Quick load ────────────────────────────────────────────────────────────
+
+    private static void QuickLoad()
+    {
+        if (_panel?.Visible == true) _panel.Visible = false;
+        CheckpointManager.LoadForCurrentFloor();
+    }
 
     // ── Panel ─────────────────────────────────────────────────────────────────
 

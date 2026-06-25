@@ -9,6 +9,7 @@ namespace ModTemplate.ModTemplateCode.Checkpoints;
 public static class CheckpointManager
 {
     public static int CheckpointCount => _checkpoints.Count;
+    public static int CurrentFloor    { get; private set; } = -1;
 
     // Floor → (complete run state at that floor, time it was captured)
     private static readonly Dictionary<int, (SerializableRun RunSave, DateTime SavedAt)> _checkpoints = new();
@@ -22,6 +23,7 @@ public static class CheckpointManager
 
     public static void OnRunStart()
     {
+        CurrentFloor = -1;
         _checkpoints.Clear();
         if (Directory.Exists(ActiveDir))
             Directory.Delete(ActiveDir, recursive: true);
@@ -69,6 +71,7 @@ public static class CheckpointManager
 
     public static void OnRunEnd()
     {
+        CurrentFloor = -1;
         _checkpoints.Clear();
         if (Directory.Exists(ActiveDir))
         {
@@ -81,6 +84,7 @@ public static class CheckpointManager
 
     public static void Save(int floor)
     {
+        CurrentFloor = floor;
         _ = SaveAsync(floor);
     }
 
@@ -130,6 +134,22 @@ public static class CheckpointManager
             .OrderByDescending(s => s.Floor)];
 
     // ── Load ──────────────────────────────────────────────────────────────────
+
+    public static void LoadForCurrentFloor()
+    {
+        if (CurrentFloor < 0)
+        {
+            MainFile.Logger.Info("[Checkpoint] QuickLoad: not in a run.");
+            return;
+        }
+        if (!_checkpoints.TryGetValue(CurrentFloor, out var entry))
+        {
+            MainFile.Logger.Info($"[Checkpoint] QuickLoad: no checkpoint for floor {CurrentFloor}.");
+            return;
+        }
+        MainFile.Logger.Info($"[Checkpoint] QuickLoad: loading floor {CurrentFloor}.");
+        _ = LoadCheckpointAsync(CurrentFloor, entry.RunSave);
+    }
 
     public static void LoadCheckpoint(RunCheckpoint checkpoint)
     {
