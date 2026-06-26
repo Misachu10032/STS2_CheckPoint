@@ -2,6 +2,9 @@
 
 A Slay the Spire 2 mod that automatically saves your run at the start of every floor, letting you reload any previous floor at any time.
 
+## Demo
+https://www.youtube.com/watch?v=YHtND8cpsZA
+
 ## Features
 
 - Auto-saves a checkpoint at the beginning of every floor
@@ -35,6 +38,3 @@ When you start a new run, the entire `active/` folder is wiped and recreated fre
 subscribe on steam workshop
 https://steamcommunity.com/sharedfiles/filedetails/?id=3751584509
 
-## Author
-
-Misachu
