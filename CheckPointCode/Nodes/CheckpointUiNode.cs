@@ -14,7 +14,7 @@ internal static class CheckpointUi
     private static Button?        _hudButton;
     private static Button?        _quickLoadButton;
     private static Control?       _panel;
-    private static VBoxContainer? _list;
+    private static GridContainer? _list;
 
     private static double _lHeld;
     private static double _sHeld;
@@ -154,27 +154,14 @@ internal static class CheckpointUi
 
         outer.AddChild(new HSeparator());
 
-        var cols = new HBoxContainer();
-        outer.AddChild(cols);
-        cols.AddChild(ColLabel("Floor", 80));
-        cols.AddChild(ColLabel("Saved at", 100));
-        cols.AddChild(new Control { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill });
-        outer.AddChild(new HSeparator());
-
         var scroll = new ScrollContainer();
         scroll.SizeFlagsVertical = Control.SizeFlags.ExpandFill;
         outer.AddChild(scroll);
 
-        _list = new VBoxContainer();
+        _list = new GridContainer { Columns = 4 };
         _list.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
         scroll.AddChild(_list);
     }
-
-    private static Label ColLabel(string text, int minWidth) => new()
-    {
-        Text              = text,
-        CustomMinimumSize = new Vector2(minWidth, 0),
-    };
 
     // ── Quick load ────────────────────────────────────────────────────────────
 
@@ -209,20 +196,15 @@ internal static class CheckpointUi
 
         foreach (var cp in checkpoints)
         {
-            var row = new HBoxContainer();
-            _list.AddChild(row);
-            row.AddChild(new Label { Text = $"Floor {cp.Floor,2}",                              CustomMinimumSize = new Vector2(80,  0) });
-            row.AddChild(new Label { Text = cp.SavedAt.ToLocalTime().ToString("MM/dd  HH:mm:ss"), CustomMinimumSize = new Vector2(100, 0) });
-            row.AddChild(new Control { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill });
-
-            var btn = new Button { Text = "Load" };
+            var btn = new Button { Text = $"Floor {cp.Floor}" };
+            btn.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
             var captured = cp;
             btn.Pressed += () =>
             {
                 CheckpointManager.LoadCheckpoint(captured);
                 if (_panel != null) _panel.Visible = false;
             };
-            row.AddChild(btn);
+            _list.AddChild(btn);
         }
     }
 }
